@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QR Code Scanner</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #3f87a6, #ebf8e1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+  }
+
+  h1 {
+    margin-top: 40px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  #qr-reader {
+    width: 300px;
+    max-width: 90vw;
+    margin: 30px auto 10px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+  }
+
+  #result {
+    margin-top: 20px;
+    background: #fff;
+    padding: 15px 20px;
+    width: 320px;
+    max-width: 90vw;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+    word-wrap: break-word;
+    user-select: text;
+  }
+
+  #result span {
+    font-weight: 700;
+    color: #2c7a7b;
+  }
+
+  #controls {
+    margin-top: 15px;
+  }
+
+  button {
+    background-color: #2c7a7b;
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    margin: 0 10px;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+
+  button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+
+  button:hover:not(:disabled) {
+    background-color: #285e61;
+  }
+
+  footer {
+    margin-top: auto;
+    padding: 15px 0;
+    font-size: 0.85rem;
+    color: #555;
+  }
+
+  @media (min-width: 600px) {
+    #qr-reader {
+      width: 400px;
+    }
+    #result {
+      width: 400px;
+    }
+  }
+</style>
+</head>
+<body>
+  <h1>QR Code Scanner</h1>
+  <div id="qr-reader"></div>
+  <div id="controls">
+    <button id="start-button">Start Scanning</button>
+    <button id="stop-button" disabled>Stop Scanning</button>
+  </div>
+  <div id="result"><span>Scanned Result:</span> <br /><span id="result-message">None</span></div>
+  
+  <footer>Camera access is required for scanning QR codes.</footer>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script>
+    const startButton = document.getElementById('start-button');
+    const stopButton = document.getElementById('stop-button');
+    const resultMessage = document.getElementById('result-message');
+    const qrReaderDiv = document.getElementById('qr-reader');
+
+    let html5QrCode;
+    let scanning = false;
+
+    function onScanSuccess(decodedText, decodedResult) {
+      // Handle on success condition with the decoded text or result.
+      resultMessage.textContent = decodedText;
+      // Optionally stop scanning after first successful scan:
+      // stopScanning();
+    }
+
+    function onScanFailure(error) {
+      // Handle scan failure, often ignored.
+      // console.warn(`QR error = ${error}`);
+    }
+
+    function startScanning() {
+      if (scanning) return;
+
+      html5QrCode = new Html5Qrcode("qr-reader");
+      const config = { fps: 10, qrbox: {width: 250, height: 250} };
+
+      Html5Qrcode.getCameras().then(cameras => {
+        if (cameras && cameras.length) {
+          let cameraId = cameras[0].id;
+
+          html5QrCode.start(
+            cameraId,
+            config,
+            onScanSuccess,
+            onScanFailure
+          ).then(() => {
+            scanning = true;
+            startButton.disabled = true;
+            stopButton.disabled = false;
+            resultMessage.textContent = "Scanning...";
+          }).catch(err => {
+            resultMessage.textContent = `Error starting scan: ${err}`;
+          });
+        } else {
+          resultMessage.textContent = "No cameras found on this device.";
+        }
+      }).catch(err => {
+        resultMessage.textContent = `Error getting cameras: ${err}`;
+      });
+    }
+
+    function stopScanning() {
+      if (!scanning || !html5QrCode) return;
+
+      html5QrCode.stop().then(() => {
+        scanning = false;
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        resultMessage.textContent = "Scanning stopped.";
+        html5QrCode.clear();
+      }).catch(err => {
+        resultMessage.textContent = `Error stopping scan: ${err}`;
+      });
+    }
+
+    startButton.addEventListener('click', startScanning);
+    stopButton.addEventListener('click', stopScanning);
+  </script>
+</body>
+</html>
+
