@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pinterest Clone with Unsplash</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+  <h1>Pinterest Clone</h1>
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Search pins..." id="searchInput" aria-label="Search pins" />
+  </div>
+  
+  <main>
+    <div id="gallery" aria-live="polite" aria-label="Image gallery"></div>
+    <button id="loadMoreBtn" aria-label="Load more images">Load More</button>
+    <div id="loader" role="status" aria-live="polite" aria-label="Loading"></div>
+  </main>
+
+ <script src="script.js"></script>
+  
+</body>
+</html>
+
