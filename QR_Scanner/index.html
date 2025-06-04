@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QR Code Scanner with Glassmorphism</title>
+<link rel="stylesheet" href="style.css">
+<link rel="shortcut icon" href="public/favicon.png" type="image/x-icon">
+</head>
+
+
+<body>
+  <div class="card">
+    <h1>QR Code Scanner</h1>
+    <p>Scan a QR code using your camera</p>
+    <video id="video" autoplay muted playsinline></video>
+    <div id="outputData">No QR code detected.</div>
+    <div id="loadingMessage">🎥 Waiting for camera access...</div>
+    <button id="startButton">Start Scanner</button>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
