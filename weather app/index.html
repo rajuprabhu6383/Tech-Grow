@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+        <link rel="shortcut icon" href="Weather Icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+     <div class="Header">
+        <h1>Weather Check App Using Api</h1>
+     </div>
+
+     <!-- Weather Card -->
+
+
+    <div class="card">
+
+        <!-- search box for javascript Api info -->
+
+        <div class="search">
+            <input type="text" placeholder="Enter city name" spellcheck="false">
+            <button><img src="images_weather/search.png" alt=""></button>
+        </div>
+
+        <!-- validation -->
+
+        <div class="error">
+            <img src="not-found.png" alt="">
+            <p>Invalid city name </p>
+        </div>
+
+        <!-- weather -->
+
+        <div class="weather-img">
+            <img src="search-city.png" alt="">
+            <p>search city</p>
+        </div>
+
+        <div class="weather">
+            <img src="images_weather/rain.png" alt="rain image" class="weather-icon">
+            <!-- temperature -->
+            <h1 class="temp">°C</h1>
+
+            
+
+            <!-- city name -->
+            <h2 class="city_name"></h2>
+            <!-- details tag -->
+
+            <div class="details">
+                <!-- column 1 -->
+                <div class="col">
+                    <img src="images_weather/humidity.png" alt="">
+                    <div>
+                        <p class="humidity"><!-- 50 -->%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+
+                <!-- column 2 -->
+                <div class="col">
+                    <img src="images_weather/wind.png" alt="">
+                    <div>
+                        <p class="wind"> km/h</p>
+                        <p>wind Speed</p>
+                    </div>
+
+                </div>
+            </div>
+            <!-- end weather -->
+        </div>
+
+        <!-- End Weather Card -->
+
+    </div>
+
+
+
+
+<script src="javascript.js"></script>
+
+</body>
+
+</html>
